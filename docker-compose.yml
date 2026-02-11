@@ -3,19 +3,24 @@ services:
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ---
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: minicrm
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
   backend:
     build: ./backend
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
     environment:
       DB_HOST: mysql
-      DB_USER: ---
-      DB_PASSWORD: ---
-      DB_NAME: ---
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: minicrm
+      DATABASE_URL: "mysql://root:password@mysql:3306/minicrm"
+      JWT_SECRET: "super-secret-docker"
     ports:
       - "3001:3001"
     depends_on:
@@ -24,6 +29,11 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     depends_on:
       - backend
 volumes:

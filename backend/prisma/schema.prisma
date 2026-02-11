@@ -1,0 +1,63 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username      String  @unique
+  password      String   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leads         Lead[]
+  interactions  Interaction[]
+}
+
+model Status {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leads Lead[]
+}
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?
+  phone     String?
+  company   String?
+  role      String?
+  value     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner    User?   @relation(fields: [ownerId], references: [id])
+  ownerId  Int?
+
+  status   Status? @relation(fields: [statusId], references: [id])
+  statusId Int?
+
+  interactions Interaction[]
+}
+
+model Interaction {
+  id        Int      @id @default(autoincrement())
+  type      String
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lead   Lead @relation(fields: [leadId], references: [id])
+  leadId Int
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+}

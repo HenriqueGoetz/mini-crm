@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import { logger } from "./middlewares/logger.middleware";
 import router from "./routes/index";
@@ -5,6 +6,11 @@ import router from "./routes/index";
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  }),
+);
 app.use(express.json());
 
 app.use(logger);
