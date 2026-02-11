@@ -9,6 +9,9 @@ COPY . .
 
 RUN npm run build
 
+ARG BUILD_ENV
+ENV BUILD_ENV=${BUILD_ENV}
+
 EXPOSE 3001
 
-CMD sh -c "npm run migrate && npm start"
+CMD sh -c "npm run migrate && if [ \"$BUILD_ENV\" = \"production\" ]; then npm run start; else npm  run dev; fi"
