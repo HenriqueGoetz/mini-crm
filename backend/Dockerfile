@@ -7,11 +7,8 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
-
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
+RUN npm run build
 
 EXPOSE 3001
 
-CMD ["./entrypoint.sh"]
+CMD sh -c "npm run migrate && npm start"
