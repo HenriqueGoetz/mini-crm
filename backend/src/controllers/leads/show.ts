@@ -4,7 +4,7 @@ import prisma from "../../prismaClient";
 export async function show(req: Request, res: Response) {
   try {
     const user = (req as any).user;
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     try {
       const lead = await prisma.lead.findUnique({
