@@ -9,12 +9,18 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
       args:
         - BUILD_ENV=development
+        - DATABASE_URL=mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
     volumes:
       - ./backend/src:/app/src
       - ./backend/prisma:/app/prisma
@@ -22,11 +28,11 @@ services:
       DATABASE_URL: mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
       JWT_SECRET: ${JWT_SECRET}
       CORS_ORIGIN: ${CORS_ORIGIN}
-
     ports:
       - "3001:3001"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
   frontend:
     build:
       context: ./frontend
@@ -38,6 +44,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 volumes:
