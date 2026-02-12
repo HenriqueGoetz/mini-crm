@@ -13,9 +13,12 @@ COPY . .
 ARG BUILD_ENV
 ENV BUILD_ENV=${BUILD_ENV}
 
-RUN if [ "$BUILD_ENV" = "production" ]; then npm run build; fi
+RUN npm run build
+
+COPY start.sh .
+RUN chmod +x start.sh
 
 EXPOSE 3000
 
-RUN if [ "$BUILD_ENV" = "production" ]; then npm install -g serve && serve -s build -l 3000; else npm start; fi
+CMD ["./start.sh"]
 
