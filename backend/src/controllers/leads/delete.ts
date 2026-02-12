@@ -15,6 +15,6 @@ export async function deleteLead(req: Request, res: Response) {
     res.status(200).json(lead);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erro interno" });
+    return res.status(500).json({ message: "Erro interno." });
   }
 }

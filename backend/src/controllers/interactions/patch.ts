@@ -14,7 +14,7 @@ export async function patch(req: Request, res: Response) {
     });
 
     if (!lead) {
-      return res.status(404).json({ message: "Lead não encontrado" });
+      return res.status(404).json({ message: "Lead não encontrado." });
     }
 
     const interaction = await prisma.interaction.findUnique({
@@ -25,7 +25,7 @@ export async function patch(req: Request, res: Response) {
     });
 
     if (!interaction) {
-      return res.status(404).json({ message: "Interação não encontrada" });
+      return res.status(404).json({ message: "Interação não encontrada." });
     }
 
     const { type, notes, date } = req.body;
@@ -33,12 +33,12 @@ export async function patch(req: Request, res: Response) {
     if (!type) {
       return res
         .status(400)
-        .json({ message: "O tipo de interação é obrigatório" });
+        .json({ message: "O tipo de interação é obrigatório." });
     }
 
     if (!date || isNaN(Date.parse(date))) {
       return res.status(400).json({
-        message: "A data da interação é obrigatória e deve ser válida",
+        message: "A data da interação é obrigatória e deve ser válida.",
       });
     }
 
@@ -55,11 +55,10 @@ export async function patch(req: Request, res: Response) {
       });
       res.status(200).json(updatedInteraction);
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Erro ao atualizar interação" });
+      return res.status(500).json({ message: "Erro ao atualizar interação." });
     }
   } catch (error) {
     console.error("Erro ao atualizar interação:", error);
-    return res.status(500).json({ message: "Erro ao atualizar interação" });
+    return res.status(500).json({ message: "Erro ao atualizar interação." });
   }
 }

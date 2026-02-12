@@ -8,13 +8,13 @@ export async function patch(req: Request, res: Response) {
     const { name, email, phone, company, role, value, statusId } = req.body;
 
     if (!name) {
-      return res.status(400).json({ message: "O nome do lead é obrigatório" });
+      return res.status(400).json({ message: "O nome do lead é obrigatório." });
     }
 
     if (value && typeof value !== "number") {
       return res
         .status(400)
-        .json({ message: "O valor do lead deve ser um número" });
+        .json({ message: "O valor do lead deve ser um número." });
     }
 
     const status = await prisma.status.findUnique({
@@ -24,7 +24,7 @@ export async function patch(req: Request, res: Response) {
     });
 
     if (!status) {
-      return res.status(400).json({ message: "Status do lead inválido" });
+      return res.status(400).json({ message: "Status do lead inválido." });
     }
 
     try {
@@ -43,11 +43,9 @@ export async function patch(req: Request, res: Response) {
 
       res.status(200).json(lead);
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: "Erro interno" });
+      return res.status(500).json({ message: "Erro interno." });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Erro ao editar lead" });
+    return res.status(500).json({ message: "Erro ao editar lead." });
   }
 }

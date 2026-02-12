@@ -156,7 +156,14 @@ function Lead() {
                       </Typography>
                     </Box>
                   )}
+                  <Divider />
                 </Stack>
+                {lead.status && (
+                  <Box display="flex" gap="5px" alignItems="center">
+                    Status:
+                    <Typography fontSize="16px">{lead.status.name}</Typography>
+                  </Box>
+                )}
                 <Divider />
                 <Box
                   display="flex"

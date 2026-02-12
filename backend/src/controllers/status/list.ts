@@ -18,6 +18,6 @@ export async function list(req: Request, res: Response) {
 
     return res.json(allStatus);
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao buscar status" });
+    return res.status(500).json({ message: "Erro ao buscar status." });
   }
 }

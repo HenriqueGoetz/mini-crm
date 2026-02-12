@@ -11,7 +11,7 @@ export async function login(req: Request, res: Response) {
   if (!username || !password) {
     return res
       .status(400)
-      .json({ message: "username e password são obrigatórios" });
+      .json({ message: "Username e password são obrigatórios." });
   }
 
   try {
@@ -25,13 +25,13 @@ export async function login(req: Request, res: Response) {
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      return res.status(401).json({ message: "Credenciais inválidas." });
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      return res.status(401).json({ message: "Credenciais inválidas." });
     }
 
     const token = jwt.sign(
@@ -48,6 +48,6 @@ export async function login(req: Request, res: Response) {
     return res.json({ username, token });
   } catch (error) {
     console.error("Erro no login:", error);
-    return res.status(500).json({ message: "Erro ao fazer login" });
+    return res.status(500).json({ message: "Erro ao fazer login." });
   }
 }

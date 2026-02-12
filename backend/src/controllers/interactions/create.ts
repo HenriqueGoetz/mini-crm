@@ -13,7 +13,7 @@ export async function create(req: Request, res: Response) {
     });
 
     if (!lead) {
-      return res.status(404).json({ message: "Lead não encontrado" });
+      return res.status(404).json({ message: "Lead não encontrado." });
     }
 
     const { type, notes, date } = req.body;
@@ -21,12 +21,12 @@ export async function create(req: Request, res: Response) {
     if (!type) {
       return res
         .status(400)
-        .json({ message: "O tipo de interação é obrigatório" });
+        .json({ message: "O tipo de interação é obrigatório." });
     }
 
     if (!date || isNaN(Date.parse(date))) {
       return res.status(400).json({
-        message: "A data da interação é obrigatória e deve ser válida",
+        message: "A data da interação é obrigatória e deve ser válida.",
       });
     }
 
@@ -42,9 +42,9 @@ export async function create(req: Request, res: Response) {
       });
       res.status(201).json(interaction);
     } catch (error) {
-      return res.status(500).json({ message: "Erro interno" });
+      return res.status(500).json({ message: "Erro interno." });
     }
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao criar interação" });
+    return res.status(500).json({ message: "Erro ao criar interação." });
   }
 }

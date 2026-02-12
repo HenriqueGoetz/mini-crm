@@ -15,10 +15,10 @@ export async function deleteInteraction(req: Request, res: Response) {
       });
       res.status(200).json(interaction);
     } catch (error) {
-      return res.status(500).json({ message: "Erro ao remover interação" });
+      return res.status(500).json({ message: "Erro ao remover interação." });
     }
   } catch (error) {
     console.error("Erro ao remover interação:", error);
-    return res.status(500).json({ message: "Erro ao remover interação" });
+    return res.status(500).json({ message: "Erro ao remover interação." });
   }
 }

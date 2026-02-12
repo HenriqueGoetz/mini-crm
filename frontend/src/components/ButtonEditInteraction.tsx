@@ -106,7 +106,7 @@ export function ButtonEditInteraction({
               component="form"
               display="flex"
               flexDirection="column"
-              gap="10px"
+              gap="15px"
               onSubmit={handleSave}
             >
               <FormControl fullWidth>

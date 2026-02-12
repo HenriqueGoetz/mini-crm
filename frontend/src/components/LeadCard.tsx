@@ -6,21 +6,7 @@ import { formatCurrency } from "../utils/formatCurrency";
 
 export function LeadCard({ lead }: { lead: Lead }) {
   return (
-    <Box
-      to={`/leads/${lead.id}`}
-      component={Link}
-      width="100%"
-      bgcolor="#fff"
-      boxShadow="0 0 14px -7px #777"
-      padding="10px"
-      borderRadius="10px"
-      sx={{
-        cursor: "pointer",
-        "&:hover,&:active": {
-          backgroundColor: "#f5f5f5",
-        },
-      }}
-    >
+    <Box to={`/leads/${lead.id}`} component={Link} width="100%">
       <Box display="flex" alignItems="center" gap="10px">
         <Avatar sx={{ width: "30px", height: "30px" }}>
           {lead.name.charAt(0).toUpperCase()}
@@ -63,7 +49,6 @@ export function LeadCard({ lead }: { lead: Lead }) {
         </Box>
       </Stack>
       <Divider sx={{ margin: "10px 0" }} />
-
       <Box
         display="flex"
         alignItems="center"

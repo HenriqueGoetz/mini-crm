@@ -72,7 +72,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
   };
 
   return (
-    <Box mb="20px">
+    <Box minWidth="max-content">
       <Button variant="contained" onClick={() => setOpen(true)}>
         Novo Lead
       </Button>
@@ -107,7 +107,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
               component="form"
               display="flex"
               flexDirection="column"
-              gap="10px"
+              gap="15px"
               onSubmit={handleSave}
             >
               <FormControl fullWidth>
@@ -123,7 +123,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
                   }}
                 />
               </FormControl>
-              <Box width="100%" display="flex" gap="10px" flexWrap="wrap">
+              <Box width="100%" display="flex" gap="15px" flexWrap="wrap">
                 <FormControl sx={{ flex: 1, minWidth: "200px" }}>
                   <TextField
                     size="small"
@@ -150,7 +150,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
                   />
                 </FormControl>
               </Box>
-              <Box width="100%" display="flex" gap="10px" flexWrap="wrap">
+              <Box width="100%" display="flex" gap="15px" flexWrap="wrap">
                 <FormControl sx={{ flex: 1, minWidth: "200px" }}>
                   <TextField
                     size="small"
@@ -176,7 +176,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
                   />
                 </FormControl>
               </Box>
-              <Box width="100%" display="flex" gap="10px" flexWrap="wrap">
+              <Box width="100%" display="flex" gap="15px" flexWrap="wrap">
                 <FormControl sx={{ flex: 1, minWidth: "200px" }}>
                   <TextField
                     size="small"

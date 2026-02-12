@@ -19,7 +19,7 @@ export async function register(req: Request, res: Response) {
   if (!username || !password) {
     return res
       .status(400)
-      .json({ message: "Username e senha são obrigatórios" });
+      .json({ message: "Username e senha são obrigatórios." });
   }
 
   try {
@@ -54,6 +54,6 @@ export async function register(req: Request, res: Response) {
     return res.status(201).json({ username, token });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
-    return res.status(500).json({ message: "Erro ao criar usuário" });
+    return res.status(500).json({ message: "Erro ao criar usuário." });
   }
 }

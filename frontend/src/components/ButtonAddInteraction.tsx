@@ -96,7 +96,7 @@ export function ButtonAddInteraction({ mutate }: { mutate: () => void }) {
               component="form"
               display="flex"
               flexDirection="column"
-              gap="10px"
+              gap="15px"
               onSubmit={handleSave}
             >
               <FormControl fullWidth>

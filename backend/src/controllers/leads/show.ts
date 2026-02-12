@@ -17,6 +17,12 @@ export async function show(req: Request, res: Response) {
               username: true,
             },
           },
+          status: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
           interactions: {
             include: {
               user: {
@@ -34,14 +40,14 @@ export async function show(req: Request, res: Response) {
       });
 
       if (!lead) {
-        return res.status(404).json({ message: "Lead não encontrado" });
+        return res.status(404).json({ message: "Lead não encontrado." });
       }
 
       res.status(200).json(lead);
     } catch (error) {
-      return res.status(500).json({ message: "Erro interno" });
+      return res.status(500).json({ message: "Erro interno." });
     }
   } catch (error) {
-    return res.status(500).json({ message: "Erro ao buscar lead" });
+    return res.status(500).json({ message: "Erro ao buscar lead." });
   }
 }
