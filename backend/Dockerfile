@@ -7,6 +7,9 @@ RUN npm install
 
 COPY . .
 
+ARG DATABASE_URL
+RUN DATABASE_URL=$DATABASE_URL 
+
 RUN npm run build
 
 RUN npm run migrate
