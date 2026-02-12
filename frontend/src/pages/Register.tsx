@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import { useAuth } from "../contexts/AuthContext";
 import { api } from "../services/api";
@@ -118,7 +119,7 @@ export function Register() {
             </Stack>
             <Stack gap="10px" width="100%" marginTop="10px">
               <Typography textAlign="center">Já tem uma conta?</Typography>
-              <Button fullWidth href="/login" variant="outlined">
+              <Button fullWidth to="/login" component={Link} variant="outlined">
                 Entrar
               </Button>
             </Stack>

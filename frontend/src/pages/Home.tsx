@@ -15,12 +15,19 @@ function Home() {
     <Box bgcolor="#0e0d1f">
       <Stack minHeight="100dvh" width="100%" gap="30px">
         <Header />
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           {isLoading && <Loading />}
           {!isLoading && data && (
             <>
               <ButtonAddLead mutate={mutate} />
-              <Box display="flex" gap="10px" width="100%">
+              <Box
+                display="flex"
+                gap="10px"
+                width="100%"
+                overflow="auto"
+                maxWidth="100%"
+                paddingBottom="10px"
+              >
                 {data.map((column: ColumnStatus) => {
                   const value = column.leads.reduce(
                     (acc: number, lead: Lead) => {
@@ -28,9 +35,9 @@ function Home() {
                     },
                     0,
                   );
-
                   return (
                     <Stack
+                      minWidth="240px"
                       flex="1"
                       key={column.id}
                       title={column.name}

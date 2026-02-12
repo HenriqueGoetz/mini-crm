@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -18,7 +19,7 @@ function Home() {
         <Typography>
           A página que você está tentando acessar não existe ou foi movida.
         </Typography>
-        <Button href="/" variant="contained">
+        <Button to="/" component={Link} variant="contained">
           Voltar para Home
         </Button>
       </Stack>

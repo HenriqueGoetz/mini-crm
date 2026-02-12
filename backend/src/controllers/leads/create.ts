@@ -4,10 +4,16 @@ import prisma from "../../prismaClient";
 export async function create(req: Request, res: Response) {
   try {
     const user = (req as any).user;
-    const { name, email, phone, company, role, statusId } = req.body;
+    const { name, email, phone, company, role, value, statusId } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: "O nome do lead é obrigatório" });
+    }
+
+    if (value && typeof value !== "number") {
+      return res
+        .status(400)
+        .json({ message: "O valor do lead deve ser um número" });
     }
 
     try {
@@ -18,6 +24,7 @@ export async function create(req: Request, res: Response) {
           phone: phone || "",
           company: company || "",
           role: role || "",
+          value: value || 0,
           statusId: statusId || 1,
           ownerId: user.id,
         },

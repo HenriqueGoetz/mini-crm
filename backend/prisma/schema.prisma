@@ -52,6 +52,7 @@ model Interaction {
   id        Int      @id @default(autoincrement())
   type      String
   notes     String?
+  date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

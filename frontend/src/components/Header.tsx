@@ -6,7 +6,7 @@ export function Header() {
 
   return (
     <Box width="100%" bgcolor="#fff">
-      <Container maxWidth="lg" sx={{ padding: "10px" }}>
+      <Container maxWidth="xl" sx={{ padding: "10px" }}>
         <Box
           width="100%"
           display="flex"

@@ -43,7 +43,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
       email,
       phone,
       company,
-      value,
+      value: parseInt(value.replace(/\D/g, "")),
       role,
       statusId: status,
     });
@@ -62,7 +62,11 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
       <Button variant="contained" onClick={() => setOpen(true)}>
         Novo Lead
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ padding: "10px" }}
+      >
         <Container
           maxWidth="sm"
           sx={{
