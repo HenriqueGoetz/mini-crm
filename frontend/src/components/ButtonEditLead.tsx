@@ -1,4 +1,4 @@
-import { Close } from "@mui/icons-material";
+import { Close, Edit } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -13,14 +13,23 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { api } from "../services/api";
 import { useStatus } from "../services/swr/useStatus";
+import { Lead } from "../types/Lead";
 import { Status } from "../types/Status";
 import { formatCurrency } from "../utils/formatCurrency";
 import { formatPhone } from "../utils/formatPhone";
 import { Loading } from "./Loading";
 
-export function ButtonAddLead({ mutate }: { mutate: () => void }) {
+export function ButtonEditLead({
+  lead,
+  mutate,
+}: {
+  lead: Lead;
+  mutate: () => void;
+}) {
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,24 +44,23 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
   const { isLoading, data } = useStatus();
 
   useEffect(() => {
-    if (!open) {
-      setName("");
-      setEmail("");
-      setPhone("");
-      setCompany("");
-      setRole("");
-      setStatus("");
-      setValue("R$ 0,00");
+    if (open) {
+      setName(lead.name);
+      setEmail(lead.email);
+      setPhone(lead.phone);
+      setCompany(lead.company);
+      setRole(lead.role);
+      setStatus(lead.statusId.toString());
+      setValue(formatCurrency(lead.value / 100));
     }
     setError("");
-  }, [open]);
+  }, [open, lead]);
 
   const handleSave = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setError("");
     setLoading(true);
-    const { ok, data } = await api.post("/leads", {
+    const { ok, data } = await api.patch(`/leads/${id}/`, {
       name,
       email,
       phone,
@@ -63,7 +71,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
     });
 
     if (!ok) {
-      setError(data.message || "Não foi possível criar o lead.");
+      setError(data.message || "Não foi possível atualizar o lead.");
     } else {
       setOpen(false);
       mutate();
@@ -72,10 +80,10 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
   };
 
   return (
-    <Box mb="20px">
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Novo Lead
-      </Button>
+    <>
+      <IconButton color="warning" onClick={() => setOpen(true)}>
+        <Edit />
+      </IconButton>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -100,7 +108,7 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
           </IconButton>
           <Stack gap="10px" width="100%">
             <Typography fontSize="18px" fontWeight="bold">
-              Novo Lead
+              Editar Lead
             </Typography>
             <Divider />
             <Box
@@ -227,6 +235,6 @@ export function ButtonAddLead({ mutate }: { mutate: () => void }) {
           {loading && <Loading />}
         </Container>
       </Modal>
-    </Box>
+    </>
   );
 }

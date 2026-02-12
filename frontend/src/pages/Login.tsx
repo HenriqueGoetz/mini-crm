@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   FormControl,
-  FormLabel,
   Stack,
   TextField,
   Typography,
@@ -58,19 +57,20 @@ export function Login() {
               fontSize="32px"
               fontWeight="bold"
               textAlign="center"
+              mb="20px"
             >
               Entrar
             </Typography>
             <Stack
               width="100%"
               component="form"
-              gap="10px"
+              gap="15px"
               onSubmit={handleLogin}
             >
               <FormControl fullWidth>
-                <FormLabel>Username</FormLabel>
                 <TextField
                   required
+                  label="Username"
                   size="small"
                   name="username"
                   placeholder="Informe seu username"
@@ -79,9 +79,9 @@ export function Login() {
                 />
               </FormControl>
               <FormControl fullWidth>
-                <FormLabel>Senha</FormLabel>
                 <TextField
                   required
+                  label="Senha"
                   type="password"
                   size="small"
                   name="password"
@@ -99,7 +99,7 @@ export function Login() {
                 Entrar
               </Button>
             </Stack>
-            <Stack gap="10px" width="100%" marginTop="10px">
+            <Stack gap="10px" width="100%" marginTop="20px">
               <Typography textAlign="center">
                 Ainda não tem uma conta?
               </Typography>

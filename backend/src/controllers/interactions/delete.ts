@@ -4,7 +4,7 @@ import prisma from "../../prismaClient";
 export async function deleteInteraction(req: Request, res: Response) {
   try {
     const user = (req as any).user;
-    const interactionId = req.params.interaction as string;
+    const interactionId = req.params.interactionId as string;
 
     try {
       const interaction = await prisma.interaction.delete({

@@ -55,14 +55,12 @@ export function LeadCard({ lead }: { lead: Lead }) {
             <Typography fontSize="12px">{lead.company}</Typography>
           </Box>
         )}
-        {lead.value && (
-          <Box display="flex" gap="5px" alignItems="center">
-            <AttachMoney fontSize="small" />
-            <Typography fontSize="12px">
-              {formatCurrency(lead.value / 100)}
-            </Typography>
-          </Box>
-        )}
+        <Box display="flex" gap="5px" alignItems="center">
+          <AttachMoney fontSize="small" />
+          <Typography fontSize="12px">
+            {formatCurrency(lead.value / 100)}
+          </Typography>
+        </Box>
       </Stack>
       <Divider sx={{ margin: "10px 0" }} />
 

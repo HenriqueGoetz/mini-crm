@@ -6,7 +6,9 @@ import { create as createInteraction } from "../controllers/interactions/create"
 import { deleteInteraction } from "../controllers/interactions/delete";
 import { patch as patchInteraction } from "../controllers/interactions/patch";
 import { create as createLead } from "../controllers/leads/create";
+import { deleteLead } from "../controllers/leads/delete";
 import { list as listLeads } from "../controllers/leads/list";
+import { patch as patchLead } from "../controllers/leads/patch";
 import { show as showLead } from "../controllers/leads/show";
 import { list as listStatus } from "../controllers/status/list";
 import { authMiddleware } from "../middlewares/auth.middleware";
@@ -20,7 +22,10 @@ router.post("/login", login);
 // Protected routes
 router.get("/leads", authMiddleware, listLeads);
 router.post("/leads", authMiddleware, createLead);
+router.patch("/leads/:id", authMiddleware, patchLead);
 router.get("/leads/:id", authMiddleware, showLead);
+router.delete("/leads/:id", authMiddleware, deleteLead);
+
 router.get("/status", authMiddleware, listStatus);
 
 router.post("/leads/:id/interactions", authMiddleware, createInteraction);

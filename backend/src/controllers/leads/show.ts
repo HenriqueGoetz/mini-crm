@@ -11,7 +11,21 @@ export async function show(req: Request, res: Response) {
           id: parseInt(id),
         },
         include: {
+          owner: {
+            select: {
+              id: true,
+              username: true,
+            },
+          },
           interactions: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                },
+              },
+            },
             orderBy: {
               date: "desc",
             },

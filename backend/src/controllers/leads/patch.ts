@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "../../prismaClient";
 
-export async function create(req: Request, res: Response) {
+export async function patch(req: Request, res: Response) {
   try {
     const user = (req as any).user;
+    const leadId = req.params.id as string;
     const { name, email, phone, company, role, value, statusId } = req.body;
 
     if (!name) {
@@ -27,7 +28,8 @@ export async function create(req: Request, res: Response) {
     }
 
     try {
-      const lead = await prisma.lead.create({
+      const lead = await prisma.lead.update({
+        where: { id: parseInt(leadId), ownerId: user.id },
         data: {
           name,
           email: email || "",
@@ -36,17 +38,16 @@ export async function create(req: Request, res: Response) {
           role: role || "",
           value: value || 0,
           statusId: parseInt(statusId),
-          ownerId: user.id,
         },
       });
 
       res.status(200).json(lead);
     } catch (error) {
-      console.log;
+      console.log(error);
       return res.status(500).json({ message: "Erro interno" });
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Erro ao criar lead" });
+    return res.status(500).json({ message: "Erro ao editar lead" });
   }
 }

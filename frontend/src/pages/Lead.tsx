@@ -10,16 +10,19 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ButtonAddInteraction } from "../components/ButtonAddInteraction";
 import { ButtonEditInteraction } from "../components/ButtonEditInteraction";
+import { ButtonEditLead } from "../components/ButtonEditLead";
 import { Header } from "../components/Header";
 import { Loading } from "../components/Loading";
+import { useAuth } from "../contexts/AuthContext";
 import { api } from "../services/api";
 import { useLead } from "../services/swr/useLead";
 import { Interaction } from "../types/Interaction";
@@ -27,12 +30,14 @@ import { formatCurrency } from "../utils/formatCurrency";
 import { getInteractionNicename } from "../utils/getInteractionNicename";
 
 function Lead() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { id } = useParams();
   const { isLoading, data, mutate } = useLead(parseInt(id as string));
   const lead = !isLoading && data;
   const [loading, setLoading] = useState(false);
 
-  const handleRemove = async (interactionId: number) => {
+  const handleRemoveInteraction = async (interactionId: number) => {
     if (!window.confirm("Tem certeza que deseja remover essa interação?")) {
       return;
     }
@@ -45,6 +50,21 @@ function Lead() {
       alert(data.message || "Não foi possível remover a interação.");
     } else {
       mutate();
+    }
+    setLoading(false);
+  };
+
+  const handleRemoverLead = async (leadId: number) => {
+    if (!window.confirm("Tem certeza que deseja remover esse lead?")) {
+      return;
+    }
+
+    setLoading(true);
+    const { ok, data } = await api.delete(`/leads/${id}`);
+    if (!ok) {
+      alert(data.message || "Não foi possível remover o lead.");
+    } else {
+      navigate("/");
     }
     setLoading(false);
   };
@@ -84,20 +104,30 @@ function Lead() {
                 minWidth="340px"
                 maxWidth="400px"
               >
-                <Box display="flex" alignItems="center" gap="10px">
-                  <Avatar sx={{ width: "60px", height: "60px" }}>
-                    {lead.name.charAt(0).toUpperCase()}
-                  </Avatar>
-                  <Stack>
-                    <Typography fontSize="16px" fontWeight="bold">
-                      {lead.name}
-                    </Typography>
-                    {lead.role && (
-                      <Typography mt="-3px" fontSize="16px" color="#777">
-                        {lead.role}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  gap="10px"
+                >
+                  <Box display="flex" alignItems="center" gap="10px">
+                    <Avatar sx={{ width: "60px", height: "60px" }}>
+                      {lead.name.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <Stack>
+                      <Typography fontSize="16px" fontWeight="bold">
+                        {lead.name}
                       </Typography>
-                    )}
-                  </Stack>
+                      {lead.role && (
+                        <Typography mt="-3px" fontSize="16px" color="#777">
+                          {lead.role}
+                        </Typography>
+                      )}
+                    </Stack>
+                  </Box>
+                  {user === lead.owner.username && (
+                    <ButtonEditLead lead={lead} mutate={mutate} />
+                  )}
                 </Box>
                 <Stack gap="10px">
                   {lead.email && (
@@ -127,6 +157,39 @@ function Lead() {
                     </Box>
                   )}
                 </Stack>
+                <Divider />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  gap="10px"
+                >
+                  <Typography fontSize="12px" color="#777">
+                    Responsável:
+                  </Typography>
+                  <Box display="flex" alignItems="center" gap="10px">
+                    <Avatar sx={{ width: "24px", height: "24px" }}>
+                      {lead.owner.username.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <Stack>
+                      <Typography fontSize="14px" fontWeight="bold">
+                        {lead.owner.username}
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Box>
+                {user === lead.owner.username && (
+                  <>
+                    <Divider />
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleRemoverLead(lead.id)}
+                    >
+                      Excluir Lead
+                    </Button>
+                  </>
+                )}
               </Stack>
               <Stack
                 gap="20px"
@@ -150,6 +213,11 @@ function Lead() {
                   <ButtonAddInteraction mutate={mutate} />
                 </Box>
                 <Stack gap="10px">
+                  {lead.interactions.length === 0 && (
+                    <Typography color="#777">
+                      Nenhuma interação registrada.
+                    </Typography>
+                  )}
                   {lead.interactions.map((interaction: Interaction) => (
                     <Stack
                       key={interaction.id}
@@ -165,23 +233,30 @@ function Lead() {
                         justifyContent="space-between"
                         flexWrap="wrap"
                       >
-                        <Typography fontSize="14px" fontWeight="bold">
+                        <Typography fontSize="18px" fontWeight="bold">
                           {getInteractionNicename(interaction.type)} - (
                           {new Date(interaction.date).toLocaleString("pt-BR")})
                         </Typography>
-                        <Box display="flex" gap="10px" alignItems="center">
-                          <ButtonEditInteraction
-                            interaction={interaction}
-                            mutate={mutate}
-                          />
-                          <IconButton
-                            color="error"
-                            onClick={() => handleRemove(interaction.id)}
-                          >
-                            <Delete />
-                          </IconButton>
-                        </Box>
+                        {user === interaction.user.username && (
+                          <Box display="flex" gap="10px" alignItems="center">
+                            <ButtonEditInteraction
+                              interaction={interaction}
+                              mutate={mutate}
+                            />
+                            <IconButton
+                              color="error"
+                              onClick={() =>
+                                handleRemoveInteraction(interaction.id)
+                              }
+                            >
+                              <Delete />
+                            </IconButton>
+                          </Box>
+                        )}
                       </Box>
+                      <Typography fontSize="14px" color="#777">
+                        Realizado por: {interaction.user.username}
+                      </Typography>
                       <Typography fontSize="14px">
                         {interaction.notes}
                       </Typography>

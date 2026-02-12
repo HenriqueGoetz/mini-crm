@@ -15,10 +15,12 @@ export async function list(req: Request, res: Response) {
         },
         include: {
           leads: {
-            owner: {
-              select: {
-                id: true,
-                username: true,
+            include: {
+              owner: {
+                select: {
+                  id: true,
+                  username: true,
+                },
               },
             },
             orderBy: {

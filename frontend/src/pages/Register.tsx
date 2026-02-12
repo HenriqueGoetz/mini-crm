@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   FormControl,
-  FormLabel,
   Stack,
   TextField,
   Typography,
@@ -66,19 +65,20 @@ export function Register() {
               fontSize="32px"
               fontWeight="bold"
               textAlign="center"
+              mb="20px"
             >
               Cadastro
             </Typography>
             <Stack
               width="100%"
               component="form"
-              gap="10px"
+              gap="15px"
               onSubmit={handleRegister}
             >
               <FormControl fullWidth>
-                <FormLabel>Username</FormLabel>
                 <TextField
                   required
+                  label="Username"
                   size="small"
                   name="username"
                   placeholder="Informe seu username"
@@ -87,10 +87,10 @@ export function Register() {
                 />
               </FormControl>
               <FormControl fullWidth>
-                <FormLabel>Senha</FormLabel>
                 <TextField
                   required
                   type="password"
+                  label="Senha"
                   size="small"
                   name="password"
                   placeholder="Informe sua senha"
@@ -99,10 +99,10 @@ export function Register() {
                 />
               </FormControl>
               <FormControl fullWidth>
-                <FormLabel>Confirmação de Senha</FormLabel>
                 <TextField
                   required
                   type="password"
+                  label="Confirmação de Senha"
                   size="small"
                   name="confPassword"
                   placeholder="Confirme sua senha"
@@ -111,9 +111,9 @@ export function Register() {
                 />
               </FormControl>
               <FormControl fullWidth>
-                <FormLabel>Senha do CRM</FormLabel>
                 <TextField
                   required
+                  label="Senha do CRM"
                   type="password"
                   size="small"
                   name="crmPassword"
@@ -132,7 +132,7 @@ export function Register() {
                 Cadastrar
               </Button>
             </Stack>
-            <Stack gap="10px" width="100%" marginTop="10px">
+            <Stack gap="10px" width="100%" marginTop="20px">
               <Typography textAlign="center">Já tem uma conta?</Typography>
               <Button fullWidth to="/login" component={Link} variant="outlined">
                 Entrar
