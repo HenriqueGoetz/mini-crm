@@ -7,13 +7,13 @@ RUN npm install
 
 COPY . .
 
-ARG DATABASE_URL
-RUN DATABASE_URL=$DATABASE_URL 
-
 RUN npm run build
 
 RUN npm run migrate
 
+ARG BUILD_ENV
+ENV BUILD_ENV=${BUILD_ENV}
+
 EXPOSE 3001
 
-CMD ["npm", "run", "start"]
+CMD sh -c "if [ \"$BUILD_ENV\" = \"production\" ]; then npm run start; else npm  run dev; fi"
