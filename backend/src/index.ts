@@ -8,7 +8,7 @@ const PORT = 3001;
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN as string,
   }),
 );
 app.use(express.json());

@@ -10,7 +10,6 @@ export async function patch(req: Request, res: Response) {
     const lead = await prisma.lead.findUnique({
       where: {
         id: parseInt(id),
-        ownerId: user.id,
       },
     });
 
@@ -21,7 +20,7 @@ export async function patch(req: Request, res: Response) {
     const interaction = await prisma.interaction.findUnique({
       where: {
         id: parseInt(interactionId),
-        leadId: lead.id,
+        userId: user.id,
       },
     });
 
@@ -59,7 +58,6 @@ export async function patch(req: Request, res: Response) {
       return res.status(500).json({ message: "Erro ao atualizar interação" });
     }
   } catch (error) {
-    console.error("Erro ao criar interação:", error);
     return res.status(500).json({ message: "Erro ao criar interação" });
   }
 }

@@ -35,7 +35,6 @@ export async function create(req: Request, res: Response) {
       return res.status(500).json({ message: "Erro interno" });
     }
   } catch (error) {
-    console.error("Erro ao criar lead:", error);
     return res.status(500).json({ message: "Erro ao criar lead" });
   }
 }

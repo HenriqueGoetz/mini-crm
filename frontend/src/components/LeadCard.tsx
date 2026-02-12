@@ -1,5 +1,5 @@
 import { AttachMoney, Business, Email, Phone } from "@mui/icons-material";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Lead } from "../types/Lead";
 import { formatCurrency } from "../utils/formatCurrency";
@@ -64,6 +64,28 @@ export function LeadCard({ lead }: { lead: Lead }) {
           </Box>
         )}
       </Stack>
+      <Divider sx={{ margin: "10px 0" }} />
+
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="10px"
+      >
+        <Typography fontSize="12px" color="#777">
+          Responsável:
+        </Typography>
+        <Box display="flex" alignItems="center" gap="10px">
+          <Avatar sx={{ width: "24px", height: "24px" }}>
+            {lead.owner.username.charAt(0).toUpperCase()}
+          </Avatar>
+          <Stack>
+            <Typography fontSize="14px" fontWeight="bold">
+              {lead.owner.username}
+            </Typography>
+          </Stack>
+        </Box>
+      </Box>
     </Box>
   );
 }

@@ -3,12 +3,18 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import prisma from "../../prismaClient";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 const SALT_ROUNDS = 10;
 
 export async function register(req: Request, res: Response) {
-  const { username, password } = req.body;
+  const { username, password, crmPassword } = req.body;
+
+  if (crmPassword !== (process.env.CRM_PASSWORD as string)) {
+    return res
+      .status(403)
+      .json({ message: "Senha de acesso ao CRM incorreta." });
+  }
 
   if (!username || !password) {
     return res

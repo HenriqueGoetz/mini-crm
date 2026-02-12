@@ -9,7 +9,6 @@ export async function create(req: Request, res: Response) {
     const lead = await prisma.lead.findUnique({
       where: {
         id: parseInt(id),
-        ownerId: user.id,
       },
     });
 
@@ -46,7 +45,6 @@ export async function create(req: Request, res: Response) {
       return res.status(500).json({ message: "Erro interno" });
     }
   } catch (error) {
-    console.error("Erro ao criar interação:", error);
     return res.status(500).json({ message: "Erro ao criar interação" });
   }
 }

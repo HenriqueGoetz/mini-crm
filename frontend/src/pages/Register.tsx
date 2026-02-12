@@ -20,6 +20,7 @@ export function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
+  const [crmPassword, setCrmPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleRegister = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -33,8 +34,9 @@ export function Register() {
 
     setLoading(true);
     const { ok, data } = await api.post("/register", {
-      username: username,
-      password: password,
+      username,
+      password,
+      crmPassword,
     });
 
     if (ok) {
@@ -108,6 +110,19 @@ export function Register() {
                   onChange={({ target }) => setConfPassword(target.value)}
                 />
               </FormControl>
+              <FormControl fullWidth>
+                <FormLabel>Senha do CRM</FormLabel>
+                <TextField
+                  required
+                  type="password"
+                  size="small"
+                  name="crmPassword"
+                  placeholder="Insira a senha do CRM para fazer o cadastro"
+                  value={crmPassword}
+                  onChange={({ target }) => setCrmPassword(target.value)}
+                />
+              </FormControl>
+
               {error && (
                 <Typography color="error" textAlign="center" fontSize="14px">
                   {error}
