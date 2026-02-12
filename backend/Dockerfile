@@ -14,4 +14,4 @@ ENV BUILD_ENV=${BUILD_ENV}
 
 EXPOSE 3001
 
-CMD sh -c "npm run migrate && if [ \"$BUILD_ENV\" = \"production\" ]; then npm run start; else npm  run dev; fi"
+RUN if [ "$BUILD_ENV" = "production" ]; then npm run start; else npm run dev; fi

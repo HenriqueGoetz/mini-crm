@@ -17,4 +17,5 @@ RUN if [ "$BUILD_ENV" = "production" ]; then npm run build; fi
 
 EXPOSE 3000
 
-CMD sh -c "if [ \"$BUILD_ENV\" = \"production\" ]; then npm install -g serve && serve -s build -l 3000; else npm start; fi"
+RUN if [ "$BUILD_ENV" = "production" ]; then npm install -g serve && serve -s build -l 3000; else npm start; fi
+
