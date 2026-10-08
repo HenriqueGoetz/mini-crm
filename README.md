@@ -1,19 +1,23 @@
 # Mini-CRM
 
-Desenvolvimento de um Mini-CRM como desafio prático. O Mini-CRM deve completar o cadastro, edição, remoção e acompanhamento de Leads. Além disso, deve permitir o cadastro, edição, remoção e acompanhamento de interações realizadas com leads.
+![Mini CRM](frontend/public/mini-crm.png)
 
-## Produção
+Development of a Mini-CRM as a practical challenge. The Mini-CRM must support creating, editing, removing, and tracking Leads. It also must allow the creation, editing, removal, and tracking of interactions with leads.
 
-Esse projeto foi publicado no railway e pode ser acessado através da seguinte url: [https://mini-crm-altervision.up.railway.app/](https://mini-crm-altervision.up.railway.app/)
+## Production
 
-## Desenvolvimento
+This project was previously published on Railway and was available at the following URL: [https://mini-crm-altervision.up.railway.app/](https://mini-crm-altervision.up.railway.app/)
 
-Para subir a aplicação em ambiente local, clone o projeto e renomei o arquivo .env-example para .env.
+That environment no longer exists and is no longer active, so the app is not currently running there. To run the project locally, follow the steps in the Development section below.
 
-Então execute o comando:
+## Development
+
+To run the application locally, clone the project and rename the .env-example file to .env.
+
+Then run the following command:
 
 ```
 docker compose up --build
 ```
 
-Um ambiente par desenvolvimento local será iniciado com o backend disponível na porta 3001 e frontend disponível na porta 3000.
+A local development environment will be started, with the backend available on port 3001 and the frontend on port 3000.
